@@ -243,7 +243,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{route('route.index')}}" class="nav-link">
                             <i class="bi bi-sign-turn-right"></i>
                             <p>Routes</p>
                         </a>
