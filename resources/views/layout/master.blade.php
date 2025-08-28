@@ -30,6 +30,9 @@
     <meta name="supported-color-schemes" content="light dark" />
     <link rel="preload" href="{{asset('css/adminlte.css')}}" as="style" />
     <!--end::Accessibility Features-->
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
@@ -255,7 +258,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{route('driver.index')}}" class="nav-link">
                             <i class="bi bi-person-lines-fill"></i>
                             <p>Drivers</p>
                         </a>
@@ -358,8 +361,18 @@
     <!--end::App Main-->
 
 </div>
+
 <!--end::App Wrapper-->
 <!--begin::Script-->
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    // Basic Example
+    flatpickr("#date", {
+        dateFormat: "Y-m-d",     // Format for Laravel (YYYY-MM-DD)
+    });
+
+</script>
 <!--begin::Third Party Plugin(OverlayScrollbars)-->
 <script
     src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
