@@ -13,7 +13,7 @@ class RouteController extends Controller
      */
     public function index()
     {
-        $data = BusRoute::orderBy('id', 'desc')->get();
+        $data = BusRoute::orderBy('id', 'desc')->paginate(6);
         return view('route.index',compact('data'));
     }
 

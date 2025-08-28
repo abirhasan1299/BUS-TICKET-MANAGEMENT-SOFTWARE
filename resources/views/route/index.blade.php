@@ -114,5 +114,9 @@
     @endforeach
     </tbody>
 </table>
+    <br>
+    <div class="d-flex justify-content-center">
+        {{$data->links()}}
+    </div>
 
 @endsection
