@@ -10,4 +10,8 @@ class BusRoute extends Model
     use HasFactory;
     protected $table = 'routes';
     protected $guarded=[];
+    public function slot()
+    {
+        return $this->hasMany(Slot::class,'route_id','id');
+    }
 }

@@ -30,9 +30,11 @@
     <meta name="supported-color-schemes" content="light dark" />
     <link rel="preload" href="{{asset('css/adminlte.css')}}" as="style" />
     <!--end::Accessibility Features-->
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
@@ -252,7 +254,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{route('bus.index')}}" class="nav-link">
                             <i class="bi bi-bus-front"></i>
                             <p>Buses</p>
                         </a>
@@ -264,7 +266,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{route('slot.index')}}" class="nav-link">
                             <i class="bi bi-collection"></i>
                             <p>Ticket Slots</p>
                         </a>
@@ -373,6 +375,13 @@
     });
 
 </script>
+<script>
+    flatpickr("#schedule", {
+        enableTime: true,           // enable time selection
+        dateFormat: "Y-m-d H:i",    // store format like datetime-local
+        time_24hr: true,            // 24-hour time format
+    });
+</script>
 <!--begin::Third Party Plugin(OverlayScrollbars)-->
 <script
     src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
@@ -450,6 +459,18 @@
     integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY="
     crossorigin="anonymous"
 ></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: 'SELECT AN OPTION',
+            allowClear: true
+        });
+    });
+</script>
 
 <!--end::Script-->
 </body>
