@@ -272,13 +272,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{route('ticket.manage')}}" class="nav-link">
                             <i class="bi bi-ticket-detailed"></i>
                             <p>Tickets Management</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{route('coupon.index')}}" class="nav-link">
                             <i class="bi bi-bag-dash-fill"></i>
                             <p>Coupon</p>
                         </a>
@@ -291,12 +291,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="bi bi-people"></i>
-                            <p>Users</p>
-                        </a>
-                    </li>
+
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="bi bi-patch-check-fill"></i>

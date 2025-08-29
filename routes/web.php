@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\BasicController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\SlotController;
+use App\Http\Controllers\TicketManagingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,3 +52,19 @@ Route::resource('/bus',BusController::class);
 */
 Route::resource('/slot',SlotController::class);
 Route::post('slot/filter',[SlotController::class,'filter'])->name('slot.filter');
+
+/*
+|--------------------------------------------------------------------------
+| Tickets Management Controller Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/ticket-manage',[TicketManagingController::class,'index'])->name('ticket.manage');
+
+
+/*
+|--------------------------------------------------------------------------
+| Coupon Controller Routes
+|--------------------------------------------------------------------------
+*/
+Route::resource('/coupon',CouponController::class);
+Route::post('coupon/filter',[CouponController::class,'filter'])->name('coupon.filter');
