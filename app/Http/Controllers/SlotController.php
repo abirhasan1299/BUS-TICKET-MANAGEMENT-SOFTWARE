@@ -65,7 +65,11 @@ class SlotController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Slot::findOrFail($id);
+        $bus = Bus::all();
+        $driver = Driver::all();
+        $route = BusRoute::all();
+        return view('slot.edit',compact('data','bus','driver','route'));
     }
 
     /**
@@ -73,7 +77,23 @@ class SlotController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+       try{
+           $validate = $request->validate([
+               'route_id' => 'required|exists:routes,id',
+               'bus_id' => 'required|exists:buses,id',
+               'driver_id' => 'required|exists:drivers,id',
+               'schedule' => 'required',
+               'price' => 'required|numeric',
+               'discount' => 'required|numeric',
+               'status' => 'required'
+           ]);
+           $model = Slot::findOrFail($id);
+           $model->update($validate);
+           return redirect()->route('slot.index')->with('success','Slot updated successfully');
+       }catch(\Exception $e)
+       {
+           return redirect()->route('slot.index')->with('danger','Somthing went wrong');
+       }
     }
 
     /**
@@ -81,6 +101,15 @@ class SlotController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Slot::findOrFail($id);
+        try{
+
+            $data->delete();
+            return redirect()->route('slot.index')->with('success','Slot deleted successfully');
+
+        }catch (\Exception $e)
+        {
+            return redirect()->route('slot.index')->with('danger','Error , something went wrong');
+        }
     }
 }

@@ -115,10 +115,10 @@
                       <a href="#" class="text-info me-2" title="View">
                           <i class="bi bi-eye-fill"></i>
                       </a>
-                      <a href="#" class="text-primary me-2" title="Edit">
+                      <a href="{{route('slot.edit',$d->id)}}" class="text-primary me-2" title="Edit">
                           <i class="bi bi-pencil-square"></i>
                       </a>
-                      <form action="#" method="POST" class="d-inline">
+                      <form action="{{route('slot.destroy',$d->id)}}" method="POST" class="d-inline">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-link p-0 text-danger" onclick="return confirm('Are you sure to delete?')" title="Delete">
