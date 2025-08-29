@@ -9,4 +9,9 @@ class Bus extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function  slots()
+    {
+        return $this->hasMany(Slot::class, 'bus_id', 'id');
+    }
 }

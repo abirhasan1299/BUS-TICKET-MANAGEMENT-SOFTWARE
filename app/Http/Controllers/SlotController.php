@@ -15,10 +15,19 @@ class SlotController extends Controller
      */
     public function index()
     {
-        $data = Slot::orderBy('id', 'desc')->get();
+        $data = Slot::orderBy('id', 'desc')->paginate(10);
         return view('slot.index', compact('data'));
     }
 
+    //Filter the slot
+    public function filter(Request $request)
+    {
+
+        $data = Slot::where('slot_code',substr($request->slot_code,5))
+            ->orWhere('price',$request->price)
+            ->get();
+        return view('slot.filter', compact('data'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -27,7 +36,14 @@ class SlotController extends Controller
         $bus = Bus::all();
         $driver = Driver::all();
         $route = BusRoute::all();
-        return view('slot.create',compact('bus','driver','route'));
+        $model= Slot::orderBy('id', 'desc')->first();
+        if($model)
+        {
+            $slot_code = $model->slot_code + 1;
+        }else{
+            $slot_code = date('Y');
+        }
+        return view('slot.create',compact('bus','driver','route','slot_code'));
     }
 
     /**
@@ -36,6 +52,7 @@ class SlotController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'slot_code'=>'required',
             'route_id' => 'required|exists:routes,id',
             'bus_id' => 'required|exists:buses,id',
             'driver_id' => 'required|exists:drivers,id',
@@ -57,7 +74,8 @@ class SlotController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Slot::findOrFail($id);
+        return view('slot.show',compact('data'));
     }
 
     /**

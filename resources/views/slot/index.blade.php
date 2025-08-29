@@ -47,33 +47,23 @@
             </div>
         @endif
         {{--    filter--}}
-        <form action="#" method="post">
+        <form action="{{route('slot.filter')}}" method="post">
             @csrf
             <div class="d-flex justify-content-between">
                 <div>
                     <a href="{{route('slot.create')}}" class="btn btn-primary" role="button"><i class="bi bi-plus-lg"></i> Add Ticket Slot</a>
                 </div>
                 <div>
-                    <input type="text"  name="bus_code" class="form-control" placeholder="Bus Code" required>
+                    <input type="text"  name="slot_code" class="form-control" placeholder="Slot Code" required>
                 </div>
                 <div>
-                    <input type="number"  name="available_seats" class="form-control" placeholder="Available Seats">
+                    <input type="number"  name="price" class="form-control" placeholder="Price">
                 </div>
                 <div>
-                    <select name="type"  class="form-control">
-                        <option selected disabled>----CHOOSE TYPE----</option>
-                        <option  value="AC">AC</option>
-                        <option  value="Non-AC">Non-AC</option>
-                        <option  value="Sleeper">Sleeper</option>
-                    </select>
+                    <input type="number"  name="route_start" class="form-control" placeholder="Start Location">
                 </div>
                 <div>
-                    <select name="status"  class="form-control">
-                        <option selected disabled>----CHOOSE STATUS----</option>
-                        <option  value="active">Active</option>
-                        <option  value="inactive">Inactive</option>
-                        <option  value="maintenance">Maintenance</option>
-                    </select>
+                    <input type="number"  name="route_end" class="form-control" placeholder="End Location">
                 </div>
                 <div>
                     <button type="submit" class="form-control btn btn-success"><i class="bi bi-funnel"></i> Filter</button>
@@ -83,7 +73,7 @@
 
         {{-- table--}}
         <table class="table table-hover table-striped align-middle mt-5">
-            <thead class="table-dark">
+            <thead >
             <tr>
                 <th>#</th>
                 <th>Route</th>
@@ -91,7 +81,7 @@
                 <th>Price</th>
                 <th>Discount</th>
                 <th>Status</th>
-                <th>Created</th>
+                <th>SlotCode</th>
                 <th class="text-center">Actions</th>
             </tr>
             </thead>
@@ -107,12 +97,12 @@
                       @if($d->status == 1)
                           <span class="badge bg-success">Active</span>
                       @else
-                          <span class="badge bg-danger text-dark">Inactive</span>
+                          <span class="badge bg-danger ">Inactive</span>
                       @endif
                   </td>
-                  <td>{{ Carbon\Carbon::parse($d->created_at)->diffForHumans()  }}</td>
+                  <td>SLOT#{{ $d->slot_code }}</td>
                   <td class="text-center">
-                      <a href="#" class="text-info me-2" title="View">
+                      <a href="{{route('slot.show',$d->id)}}" class="text-info me-2" title="View">
                           <i class="bi bi-eye-fill"></i>
                       </a>
                       <a href="{{route('slot.edit',$d->id)}}" class="text-primary me-2" title="Edit">
@@ -135,7 +125,7 @@
 
         <!-- Pagination -->
         <div class="d-flex justify-content-end mt-3">
-
+            {{$data->links()}}
         </div>
 
 @endsection

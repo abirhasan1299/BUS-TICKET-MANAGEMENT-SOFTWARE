@@ -13,4 +13,12 @@ class Slot extends Model
     public function busRoute(){
         return $this->hasOne(BusRoute::class,'id','route_id');
     }
+    public function busInfo()
+    {
+        return $this->hasOne(Bus::class,'id','bus_id');
+    }
+    public function driverInfo()
+    {
+        return $this->hasOne(Driver::class,'id','driver_id');
+    }
 }

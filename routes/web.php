@@ -49,3 +49,4 @@ Route::resource('/bus',BusController::class);
 |--------------------------------------------------------------------------
 */
 Route::resource('/slot',SlotController::class);
+Route::post('slot/filter',[SlotController::class,'filter'])->name('slot.filter');

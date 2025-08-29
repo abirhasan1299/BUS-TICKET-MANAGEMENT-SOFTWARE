@@ -58,6 +58,7 @@
     <form id="slotForm" action="{{route('slot.store')}}" method="POST">
          @csrf
         <div class="row g-3">
+            <input type="hidden" name="slot_code" value="{{$slot_code}}">
             <!-- Route Select -->
             <div class="col-md-6">
                 <label for="route_id" class="form-label">Route</label>

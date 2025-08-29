@@ -9,4 +9,9 @@ class Driver extends Model
 {
     use HasFactory;
     protected $guarded=[];
+
+    public function slots()
+    {
+        return $this->hasMany(Slot::class, 'driver_id','id');
+    }
 }
