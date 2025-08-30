@@ -7,7 +7,18 @@ use App\Http\Controllers\RouteController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\SlotController;
 use App\Http\Controllers\TicketManagingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Public Controller Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/', [BasicController::class, 'routes'])->name('basic.route');
+Route::get('/home', [BasicController::class, 'index'])->name('basic.index');
+Route::get('/contact', [BasicController::class, 'contact'])->name('basic.contact');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -68,3 +79,11 @@ Route::get('/ticket-manage',[TicketManagingController::class,'index'])->name('ti
 */
 Route::resource('/coupon',CouponController::class);
 Route::post('coupon/filter',[CouponController::class,'filter'])->name('coupon.filter');
+
+
+/*
+|--------------------------------------------------------------------------
+| USER Controller Routes
+|--------------------------------------------------------------------------
+*/
+Route::resource('/users',UserController::class);
