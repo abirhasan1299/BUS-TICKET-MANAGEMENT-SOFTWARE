@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Public Controller Routes
+| Basic Public Page Controller Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/', [BasicController::class, 'routes'])->name('basic.route');
-Route::get('/home', [BasicController::class, 'index'])->name('basic.index');
-Route::get('/contact', [BasicController::class, 'contact'])->name('basic.contact');
+
+Route::get('/', [BasicController::class, 'Home'])->name('basic.home');
+Route::post('/search',[BasicController::class, 'Search'])->name('basic.search');
+Route::get('/seat/{id}',[BasicController::class, 'Seat'])->name('basic.seat');
 
 
 /*

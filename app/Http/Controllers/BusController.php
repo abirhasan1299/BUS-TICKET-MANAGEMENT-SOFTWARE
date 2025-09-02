@@ -48,6 +48,8 @@ class BusController extends Controller
             'status'             => 'required',
             'fitness_expiry'     => 'nullable|date',
             'additional_info'    => 'nullable|string|max:255',
+            'total_rows'=>'required',
+            'seat_per_row' =>'required'
         ]);
         try{
 

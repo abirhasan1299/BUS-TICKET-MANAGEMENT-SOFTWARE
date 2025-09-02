@@ -86,6 +86,20 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Total Row</label>
+                    <input type="number" name="total_rows" class="form-control" placeholder="Enter Rows" value="{{ old('total_rows') }}">
+                    @error('total_rows')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Seat Per Rows</label>
+                    <input type="number" name="seat_per_row" class="form-control" placeholder="Enter Seat Per Rows" value="{{ old('seat_per_row') }}">
+                    @error('seat_per_row')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
 
             <!-- Right Column -->
