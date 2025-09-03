@@ -344,26 +344,28 @@
                 <div class="col-md-5">
                     <h4 class="mb-4">Passenger Details</h4>
 
-                    <form>
+                    <form method="post" action="{{route('basic.checkout')}}" autocomplete="off">
+                        @csrf
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="fullName" placeholder="Enter your full name">
+                            <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" name="name">
                         </div>
-
+                        <input type="hidden" name="seat_count" id="seat_count"  >
+                        <input type="hidden" name="seat_list" id="seat_list"  >
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email">
                         </div>
 
                         <div class="mb-3">
                             <label for="phone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
+                            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" name="phone">
                         </div>
 
 
                         <div class="mb-3">
                             <label for="gender" class="form-label">Gender</label>
-                            <select class="form-select" id="gender">
+                            <select class="form-select" name="gender" id="gender">
                                 <option selected>Select gender</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
@@ -371,7 +373,7 @@
                             </select>
                         </div>
 
-                        <div class="booking-summary">
+                        <div class="booking-summary" style="display: none;">
                             <h5>Booking Summary</h5>
                             <div class="summary-item">
                                 <span>Seats (<span id="summary-seat-count">0</span>)</span>
@@ -389,7 +391,7 @@
                         </div>
 
                         <div class="form-check mt-4">
-                            <input class="form-check-input" type="checkbox" id="termsCheck">
+                            <input class="form-check-input" name="agree" type="checkbox" id="termsCheck">
                             <label class="form-check-label" for="termsCheck">
                                 I agree to the terms and conditions
                             </label>
@@ -418,7 +420,7 @@
         const bookedSeatsList = document.getElementById('bookedSeatsList');
 
         const seatPrice = {{$data->price}}; // Price per seat
-        const taxRate = 0.1; // 10% tax
+        const taxRate = 0; // 10% tax
         let selectedSeats = [];
         let bookedSeats = [];
 
@@ -542,10 +544,14 @@
             selectedCount.textContent = count;
             summarySeatCount.textContent = count;
 
+            // ✅ Show in input fields
+            document.getElementById("seat_list").value = selectedSeats.join(", ");
+            document.getElementById("seat_count").value = count;
+
             // Update pricing
             const subtotal = count * seatPrice;
             const taxAmount = subtotal * taxRate;
-            const total = subtotal + taxAmount;
+            const total = subtotal - taxAmount;
 
             seatsPrice.textContent = subtotal.toFixed(2);
             taxes.textContent = taxAmount.toFixed(2);
@@ -562,6 +568,7 @@
         document.getElementById('bookedSeats').addEventListener('input', function() {
             parseBookedSeats();
         });
+
     });
 </script>
 </body>

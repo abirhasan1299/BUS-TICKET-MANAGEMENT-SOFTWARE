@@ -36,4 +36,10 @@ class BasicController extends Controller
         //dd($data);
         return view('public.seats', compact('data'));
     }
+
+    public function CheckOut(Request $request)
+    {
+        //dd($request->all());
+        return view('public.checkout');
+    }
 }

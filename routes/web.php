@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [BasicController::class, 'Home'])->name('basic.home');
 Route::post('/search',[BasicController::class, 'Search'])->name('basic.search');
 Route::get('/seat/{id}',[BasicController::class, 'Seat'])->name('basic.seat');
-
+Route::post('/checkout',[BasicController::class, 'CheckOut'])->name('basic.checkout');
 
 /*
 |--------------------------------------------------------------------------
