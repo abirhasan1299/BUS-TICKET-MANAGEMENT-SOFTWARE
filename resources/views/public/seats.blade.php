@@ -278,7 +278,11 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="bookedSeats" class="form-label">Booked Seats (comma separated)</label>
-                            <input type="text" class="form-control" id="bookedSeats" value="">
+                            <input type="text" class="form-control" id="bookedSeats" value="
+                            @foreach($booked as $b)
+                            {{$b->sit_list}},
+                            @endforeach
+                            ">
                         </div>
                     </div>
                 </div>
@@ -344,33 +348,24 @@
                 <div class="col-md-5">
                     <h4 class="mb-4">Passenger Details</h4>
 
-                    <form method="post" action="{{route('basic.checkout')}}" autocomplete="off">
+                    <form method="post" action="{{route('basic.cart')}}" autocomplete="off">
                         @csrf
-                        <div class="mb-3">
-                            <label for="fullName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" name="name">
-                        </div>
-                        <input type="hidden" name="seat_count" id="seat_count"  >
-                        <input type="hidden" name="seat_list" id="seat_list"  >
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" name="phone">
-                        </div>
-
+                        <input type="hidden" name="sit_count" id="seat_count"  required>
+                        <input type="hidden" name="sit_list" id="seat_list"  required>
+                        <input type="hidden" name="slot_id" value="{{$data->id}}"  required>
 
                         <div class="mb-3">
                             <label for="gender" class="form-label">Gender</label>
-                            <select class="form-select" name="gender" id="gender">
-                                <option selected>Select gender</option>
+                            <select class="form-select" name="gender" id="gender" required>
+                                <option  selected disabled>Select gender</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="coupon" class="form-label">Apply Coupon (Optional)</label>
+                            <input type="text" class="form-control" id="coupon" placeholder="Coupon Code" name="coupon" >
                         </div>
 
                         <div class="booking-summary" style="display: none;">
@@ -388,13 +383,6 @@
                                 <span>Total</span>
                                 <span>$<span id="total-price">0</span></span>
                             </div>
-                        </div>
-
-                        <div class="form-check mt-4">
-                            <input class="form-check-input" name="agree" type="checkbox" id="termsCheck">
-                            <label class="form-check-label" for="termsCheck">
-                                I agree to the terms and conditions
-                            </label>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 mt-4">

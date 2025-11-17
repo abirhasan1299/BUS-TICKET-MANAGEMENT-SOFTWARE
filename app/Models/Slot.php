@@ -21,4 +21,10 @@ class Slot extends Model
     {
         return $this->hasOne(Driver::class,'id','driver_id');
     }
+    public function cartInfo()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+
 }

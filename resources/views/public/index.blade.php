@@ -196,13 +196,30 @@
 </head>
 <body>
 <div class="container">
-    <div class="hero-text">
-        <h1>Find Your Perfect Bus Route</h1>
-        <p>Search, compare, and book bus tickets with ease</p>
+    @guest
+    <div class="d-flex justify-content-end">
+        <div>
+            <a href="{{route('users.index')}}" role="button" class="btn btn-success">Login</a>
+        </div>
+        <div style="margin-left: 10px;">
+            <a href="{{route('users.create')}}" role="button" class="btn  btn-danger">Register</a>
+        </div>
     </div>
+    @endguest
+    @auth
+            <div class="d-flex justify-content-end">
+                <div>
+                    <form action="{{route('users.logout')}}" method="post">
+                        @method('POST')
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                </div>
+            </div>
+    @endauth
 
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="mb-0"><i class="fas fa-bus me-2"></i>Bus Route Finder</h3>
@@ -211,13 +228,13 @@
                     <form method="post" action="{{route('basic.search')}}" autocomplete="off">
                         @csrf
                         <div class="row">
-                            <div class="col-md-5 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="startLocation" class="form-label">From</label>
                                 <div class="position-relative">
                                     <select class="form-select form-control" id="startLocation" name="start">
                                         <option></option>
                                         @foreach($data as $d)
-                                        <option value="{{$d->id}}">{{$d->busRoute->start_location}}</option>
+                                        <option value="{{$d->id}}">{{$d->start_location}}</option>
                                         @endforeach
                                     </select>
                                     <div class="search-icon">
@@ -226,13 +243,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-5 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="destination" class="form-label">To</label>
                                 <div class="position-relative">
                                     <select class="form-select form-control" id="destination" name="end_slot">
                                         <option></option>
                                         @foreach($data as $d)
-                                            <option value="{{$d->id}}">{{$d->busRoute->end_location}}</option>
+                                            <option value="{{$d->id}}">{{$d->end_location}}</option>
                                         @endforeach
 
                                     </select>
@@ -242,12 +259,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2 mb-3">
-                                <label for="departureDate" class="form-label">Date</label>
-                                <div class="date-input-container">
-                                    <input type="date" name="date" class="form-control" id="departureDate">
-                                </div>
-                            </div>
                         </div>
 
                         <div class="text-center mt-4">

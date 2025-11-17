@@ -3,6 +3,7 @@
 use App\Http\Controllers\BasicController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\SlotController;
@@ -18,8 +19,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BasicController::class, 'Home'])->name('basic.home');
 Route::post('/search',[BasicController::class, 'Search'])->name('basic.search');
-Route::get('/seat/{id}',[BasicController::class, 'Seat'])->name('basic.seat');
-Route::post('/checkout',[BasicController::class, 'CheckOut'])->name('basic.checkout');
+Route::get('/seat/{id}',[BasicController::class, 'Seat'])->name('basic.seat')->middleware('auth.user');
+Route::post('/cart',[BasicController::class, 'Cart'])->name('basic.cart')->middleware('auth.user');
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -88,3 +92,17 @@ Route::post('coupon/filter',[CouponController::class,'filter'])->name('coupon.fi
 |--------------------------------------------------------------------------
 */
 Route::resource('/users',UserController::class);
+Route::post('users/login',[UserController::class,'Login'])->name('users.login');
+Route::post('users/logout',[UserController::class,'Logout'])->name('users.logout');
+
+/*
+|--------------------------------------------------------------------------
+| Profile Controller Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth.user'])->group(function(){
+    Route::get('/profile',[ProfileController::class,'index'])->name('profile');
+    Route::get('/profile/cart',[ProfileController::class,'Cart'])->name('users.cart');
+    Route::delete('/profile/cart/{id}',[ProfileController::class,'CartTrash'])->name('users.cart.trash');
+});
+

@@ -4,17 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    //Login Action
+    public function Login(Request $request)
+    {
+        $validate = $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('profile');
+        }
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.'
+        ])->withInput();
+    }
+    //user logout
+    public function Logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('users.index');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all();
-        return view('user.index', compact('users'));
+       return view('user.login');
     }
 
     /**
@@ -22,7 +47,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        return view('user.registration');
     }
 
     /**
@@ -34,22 +59,22 @@ class UserController extends Controller
         $validatedData = $request->validate([
            'name' => 'required|max:255',
            'email' => 'required|unique:users,email',
-           'password' => 'required|min:6',
-           'role' => 'required'
+           'password' => 'required|min:6|confirmed',
+           'phone' => 'required|max:13|min:11|unique:users,phone'
         ]);
         try{
 
             $user = new User();
             $user->name= $validatedData['name'];
             $user->email = $validatedData['email'];
+            $user->phone = $validatedData['phone'];
             $user->password = Hash::make($validatedData['password']);
-            $user->role = $validatedData['role'];
             $user->save();
 
-            return redirect()->route('users.index')->with('success', 'User created successfully.');
+            return redirect()->route('users.create')->with('success', 'User Created Successfully');
 
         }catch (\Exception $e){
-            return redirect()->route('users.index')->with('danger', 'Something went wrong.');
+            return redirect()->route('users.create')->with('danger', 'Something went wrong.');
         }
     }
 

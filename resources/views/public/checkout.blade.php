@@ -251,23 +251,19 @@
                     <div class="booking-details">
                         <div class="detail-item">
                             <span class="detail-label">Full Name:</span>
-                            <span class="detail-value" id="summary-name">John Doe</span>
+                            <span class="detail-value" id="summary-name">{{$data->name}}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Email:</span>
-                            <span class="detail-value" id="summary-email">johndoe@example.com</span>
+                            <span class="detail-value" id="summary-email">{{$data->email}}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Phone:</span>
-                            <span class="detail-value" id="summary-phone">+1 (555) 123-4567</span>
+                            <span class="detail-value" id="summary-phone">{{$data->phone}}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Gender:</span>
-                            <span class="detail-value" id="summary-gender">Male</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Age:</span>
-                            <span class="detail-value" id="summary-age">32</span>
+                            <span class="detail-value" id="summary-gender">{{strtoupper($data->gender)}}</span>
                         </div>
                     </div>
 
@@ -276,23 +272,23 @@
                     <div class="booking-details">
                         <div class="detail-item">
                             <span class="detail-label">Route:</span>
-                            <span class="detail-value">New York to Chicago</span>
+                            <span class="detail-value">{{$data->slots->busRoute->start_location}} to {{$data->slots->busRoute->end_location}}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Departure:</span>
-                            <span class="detail-value">Aug 15, 2023 • 10:30 PM</span>
+                            <span class="detail-value">{{\Carbon\Carbon::parse($data->slots->schedule)->format('d M, Y | h:i A')}}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Bus:</span>
-                            <span class="detail-value">Luxury Coach (AC Sleeper)</span>
+                            <span class="detail-value">{{$data->slots->busInfo->bus_name}}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Selected Seats:</span>
-                            <span class="detail-value" id="summary-seats">A1, B3, C2</span>
+                            <span class="detail-value" id="summary-seats">{{$data->sit_list}}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Duration:</span>
-                            <span class="detail-value">12h 30m</span>
+                            <span class="detail-value">{{$data->slots->busRoute->estemated_time}}</span>
                         </div>
                     </div>
 
@@ -311,33 +307,19 @@
 
                     <div class="price-summary">
                         <div class="summary-item">
-                            <span>Seats (3)</span>
-                            <span>$135.00</span>
-                        </div>
-                        <div class="summary-item">
-                            <span>Taxes & Fees</span>
-                            <span>$13.50</span>
+                            <span>Seats ({{$data->sit_count}})</span>
+                            <span>${{$data->slots->price}}</span>
                         </div>
                         <div class="discount-item">
-                            <span>Discount (EARLYBIRD15)</span>
-                            <span>-$20.25</span>
+                            <span>Discount </span>
+                            <span>-$@php
+                                  $discount =   round($data->slots->price*($data->slots->discount/100))*$data->sit_count;
+                                  echo $discount;
+ @endphp</span>
                         </div>
                         <div class="summary-item total-price">
                             <span>Total Amount</span>
-                            <span>$128.25</span>
-                        </div>
-                    </div>
-
-                    <div class="coupon-section">
-                        <h5 class="mb-3">Apply Coupon</h5>
-                        <div class="coupon-input-group">
-                            <input type="text" class="form-control" placeholder="Enter coupon code">
-                            <button class="btn btn-success">Apply</button>
-                        </div>
-                        <div class="mt-3">
-                            <span class="badge bg-success me-2">EARLYBIRD15</span>
-                            <span class="badge bg-secondary">SUMMER10</span>
-                            <span class="badge bg-secondary">WELCOME5</span>
+                            <span>${{abs($data->slots->price-$discount)}}</span>
                         </div>
                     </div>
 
@@ -418,46 +400,5 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Payment method selection
-        const paymentCards = document.querySelectorAll('.payment-card');
-
-        paymentCards.forEach(card => {
-            card.addEventListener('click', function() {
-                // Remove selected class from all cards
-                paymentCards.forEach(c => c.classList.remove('selected'));
-
-                // Add selected class to clicked card
-                this.classList.add('selected');
-
-                // Check the radio button inside this card
-                const radioBtn = this.querySelector('input[type="radio"]');
-                if (radioBtn) {
-                    radioBtn.checked = true;
-                }
-            });
-        });
-
-        // Simulate loading user data from previous page
-        // In a real application, this would come from your form or session storage
-        const userData = {
-            name: "John Doe",
-            email: "johndoe@example.com",
-            phone: "+1 (555) 123-4567",
-            gender: "Male",
-            age: "32",
-            seats: "A1, B3, C2"
-        };
-
-        // Populate user data
-        document.getElementById('summary-name').textContent = userData.name;
-        document.getElementById('summary-email').textContent = userData.email;
-        document.getElementById('summary-phone').textContent = userData.phone;
-        document.getElementById('summary-gender').textContent = userData.gender;
-        document.getElementById('summary-age').textContent = userData.age;
-        document.getElementById('summary-seats').textContent = userData.seats;
-    });
-</script>
 </body>
 </html>
