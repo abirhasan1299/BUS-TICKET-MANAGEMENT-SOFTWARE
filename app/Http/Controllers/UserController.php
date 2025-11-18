@@ -19,7 +19,8 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('profile');
+
+            return redirect()->route('users.cart');
         }
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.'

@@ -3,10 +3,12 @@
 use App\Http\Controllers\BasicController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\SlotController;
+use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\TicketManagingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -101,8 +103,18 @@ Route::post('users/logout',[UserController::class,'Logout'])->name('users.logout
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth.user'])->group(function(){
-    Route::get('/profile',[ProfileController::class,'index'])->name('profile');
+
     Route::get('/profile/cart',[ProfileController::class,'Cart'])->name('users.cart');
     Route::delete('/profile/cart/{id}',[ProfileController::class,'CartTrash'])->name('users.cart.trash');
+
 });
 
+// SSLCOMMERZ Start
+
+Route::post('payment/pay', [SslCommerzPaymentController::class, 'index'])->name('payment.pay');
+
+Route::post('payment/success', [SslCommerzPaymentController::class, 'success'])->name('payment.success');
+Route::post('payment/fail', [SslCommerzPaymentController::class, 'fail'])->name('payment.fail');
+Route::post('payment/cancel', [SslCommerzPaymentController::class, 'cancel'])->name('payment.cancel');
+
+//SSLCOMMERZ END

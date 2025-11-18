@@ -46,7 +46,7 @@ class BasicController extends Controller
         $data = Slot::where('slot_code',hex2bin($id))->first();
         $booked = Cart::select('sit_list')
             ->where('slot_id',$data->id)
-            ->where('status','paid')
+            ->where('status','purchased')
             ->get();
 
         return view('public.seats', compact('data','booked'));
