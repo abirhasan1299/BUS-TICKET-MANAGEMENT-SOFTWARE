@@ -82,13 +82,14 @@ class SslCommerzPaymentController extends Controller
     public function success(Request $request)
     {
 
-        $tran_id = $request->input('tran_id');
+        try{
+            $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
         $currency = $request->input('currency');
 
         $sslc = new SslCommerzNotification();
 
-        #Check order status in order tabel against the transaction id or order id.
+
         $order_details = DB::table('payments')
             ->where('transaction_id', $tran_id)
             ->select('transaction_id', 'status', 'currency', 'amount','cart_id')->first();
@@ -107,58 +108,76 @@ class SslCommerzPaymentController extends Controller
 
             }
         }
+        DB::commit();
 
         return view('public.success');
+
+        }catch(\Exception $e){
+            DB::rollback();
+            \Log::error('Payment success handling error: '.$e->getMessage());
+            return abort(404);
+        }
 
     }
 
     public function fail(Request $request)
     {
-        $tran_id = $request->input('tran_id');
+        try {
+            $tran_id = $request->input('tran_id');
 
-        $order_details = DB::table('payments')
-            ->where('transaction_id', $tran_id)
-            ->select('transaction_id', 'status', 'currency', 'amount','cart_id')->first();
-
-        if ($order_details->status == 'pending') {
-           DB::table('payments')
+            $order_details = DB::table('payments')
                 ->where('transaction_id', $tran_id)
-                ->update(['status' => 'failed']);
-           DB::table('carts')
-                ->where('id', $order_details->cart_id)
-                ->update(['status' => 'failed']);
+                ->select('transaction_id', 'status', 'currency', 'amount','cart_id')->first();
 
-        } else if ($order_details->status == 'paid' || $order_details->status == 'complete') {
-            echo "Transaction is already Successful";
-        } else {
-            echo "Transaction is Invalid";
+            if ($order_details->status == 'pending') {
+                DB::table('payments')
+                    ->where('transaction_id', $tran_id)
+                    ->update(['status' => 'failed']);
+                DB::table('carts')
+                    ->where('id', $order_details->cart_id)
+                    ->update(['status' => 'failed']);
+
+            } else if ($order_details->status == 'paid' || $order_details->status == 'complete') {
+                echo "Transaction is already Successful";
+            } else {
+                echo "Transaction is Invalid";
+            }
+            DB::commit();
+            return redirect()->route('users.cart')->with('error', 'Transaction is Failed');
+        }catch (\Exception $e){
+            DB::rollback();
+            return abort(404);
         }
-        return redirect()->route('users.cart')->with('error', 'Transaction is Failed');
     }
 
     public function cancel(Request $request)
     {
-        $tran_id = $request->input('tran_id');
+        try {
+            $tran_id = $request->input('tran_id');
 
-        $order_details = DB::table('payments')
-            ->where('transaction_id', $tran_id)
-            ->select('transaction_id', 'status', 'currency', 'amount','cart_id')->first();
-
-        if ($order_details->status == 'pending') {
-            DB::table('payments')
+            $order_details = DB::table('payments')
                 ->where('transaction_id', $tran_id)
-                ->update(['status' => 'cancelled']);
-            DB::table('carts')
-                ->where('id', $order_details->cart_id)
-                ->update(['status' => 'cancelled']);
+                ->select('transaction_id', 'status', 'currency', 'amount', 'cart_id')->first();
 
-        } else if ($order_details->status == 'paid' || $order_details->status == 'Complete') {
-            echo "Transaction is already Successful";
-        } else {
-            echo "Transaction is Invalid";
+            if ($order_details->status == 'pending') {
+                DB::table('payments')
+                    ->where('transaction_id', $tran_id)
+                    ->update(['status' => 'cancelled']);
+                DB::table('carts')
+                    ->where('id', $order_details->cart_id)
+                    ->update(['status' => 'cancelled']);
+
+            } else if ($order_details->status == 'paid' || $order_details->status == 'Complete') {
+                echo "Transaction is already Successful";
+            } else {
+                echo "Transaction is Invalid";
+            }
+            DB::commit();
+            return redirect()->route('users.cart')->with('error', 'Transaction is Cancelled');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return abort(404);
         }
-
-        return redirect()->route('users.cart')->with('error', 'Transaction is Cancelled');
     }
 
 }

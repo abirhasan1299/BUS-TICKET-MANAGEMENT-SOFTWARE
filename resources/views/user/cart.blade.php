@@ -61,7 +61,7 @@
                             </td>
                             <td>
                                 @if($d->status=='purchased')
-                                    <a href="#" role="button" class="btn btn-sm btn-primary"><i class="bi bi-download"></i>   Ticket</a>
+                                    <a href="{{route('users.ticket.info',\Illuminate\Support\Facades\Crypt::encrypt($d->id))}}" role="button" class="btn btn-sm btn-primary"><i class="bi bi-download"></i>   Ticket</a>
                                 @endif
                                 @if($d->status=='pending' || $d->status=='failed')
                                         <div class="d-flex justify-content-start">

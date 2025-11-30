@@ -9,4 +9,9 @@ class Payment extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function slots()
+    {
+        return $this->belongsTo(Slot::class,'slot_id','id');
+    }
 }

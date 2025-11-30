@@ -25,6 +25,10 @@ class Slot extends Model
     {
         return $this->hasMany(Cart::class);
     }
+    public function paymentInfo()
+    {
+        return $this->hasMany(Payment::class,'slot_id','id');
+    }
 
 
 }

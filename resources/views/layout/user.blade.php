@@ -331,7 +331,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{route('users.payment')}}">
                     <i class="fas fa-credit-card"></i>
                     <span>Payment Info</span>
                 </a>
@@ -343,12 +343,6 @@
                     @if(isset($cart_count) && $cart_count>0)
                     <span class="badge bg-danger ms-auto">{{$cart_count}}</span>
                     @endif
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-user"></i>
-                    <span>My Tickets</span>
                 </a>
             </li>
             <li>

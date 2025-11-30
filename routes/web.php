@@ -106,8 +106,12 @@ Route::middleware(['auth.user'])->group(function(){
 
     Route::get('/profile/cart',[ProfileController::class,'Cart'])->name('users.cart');
     Route::delete('/profile/cart/{id}',[ProfileController::class,'CartTrash'])->name('users.cart.trash');
+    Route::get('profile/payment',[ProfileController::class,'PaymentInfo'])->name('users.payment');
+    Route::get('profile/ticket/{id}',[ProfileController::class,'TicketInfo'])->name('users.ticket.info');
+
 
 });
+
 
 // SSLCOMMERZ Start
 
@@ -118,3 +122,5 @@ Route::post('payment/fail', [SslCommerzPaymentController::class, 'fail'])->name(
 Route::post('payment/cancel', [SslCommerzPaymentController::class, 'cancel'])->name('payment.cancel');
 
 //SSLCOMMERZ END
+
+

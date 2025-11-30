@@ -199,9 +199,6 @@
 
         <!-- Action Buttons -->
         <div class="d-grid gap-3">
-            <button class="btn btn-premium" onclick="downloadTicket()">
-                <i class="bi bi-download me-2"></i>Download Ticket
-            </button>
             <button class="btn btn-outline-premium" onclick="goToHome()">
                 <i class="bi bi-house me-2"></i>Home
             </button>
