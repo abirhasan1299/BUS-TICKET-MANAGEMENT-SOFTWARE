@@ -302,16 +302,7 @@
                 <div>
                     <h4 class="text-white">{{$data->count()}} buses available</h4>
                 </div>
-                <div>
-                    <select class="form-select text-dark">
-                        <option>Sort by: Recommended</option>
-                        <option>Sort by: Departure Time</option>
-                        <option>Sort by: Arrival Time</option>
-                        <option>Sort by: Price (Low to High)</option>
-                        <option>Sort by: Price (High to Low)</option>
-                        <option>Sort by: Duration</option>
-                    </select>
-                </div>
+
             </div>
 
             <!-- Route-->
@@ -344,7 +335,7 @@
                         </div>
                         <div class="col-md-2 text-center">
                             <div class="route-price">${{$d->price-round($d->discount/100*$d->price)}}</div>
-                            <div class="route-seats">{{$d->busInfo->available_seats}} seats left</div>
+
                             <a class="btn btn-primary btn-sm mt-2" href="{{route('basic.seat',bin2hex($d->slot_code))}}" role="button">Select</a>
                         </div>
                     </div>

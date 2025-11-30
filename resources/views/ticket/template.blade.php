@@ -158,6 +158,18 @@
             margin-top: 10px;
             box-shadow: 0 3px 8px rgba(40, 167, 69, 0.3);
         }
+        /* Expired badge */
+        .expired-badge {
+            background: #ff3333;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-weight: 700;
+            text-align: center;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 3px 8px rgba(40, 167, 69, 0.3);
+        }
 
         /* Price styling */
         .price-section {
@@ -251,7 +263,20 @@
 
                 <!-- Confirmation Badge -->
                 <div style="text-align: center; margin-top: 20px;">
-                    <div class="confirmation-badge">CONFIRMED</div>
+                    <div class="@php
+if(\Carbon\Carbon::parse($data->slots->schedule)->isPast() ){
+    echo "expired-badge";
+}else{
+    echo "confirmation-badge";
+}
+ @endphp">
+                        @php
+if(\Carbon\Carbon::parse($data->slots->schedule)->isPast() ){
+    echo "EXPIRED";
+}else{
+    echo "CONFIRMED";
+}
+ @endphp</div>
                 </div>
             </div>
 

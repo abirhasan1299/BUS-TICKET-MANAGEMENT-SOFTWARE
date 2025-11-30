@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BusRoute;
+use App\Models\Cart;
 use App\Models\Route;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,7 @@ class RouteController extends Controller
             ->orWhere('end_location',$request->end_location)
             ->orWhere('distance',$request->distance)
             ->get();
+        //dd()
 
         return view('route.filter',compact('data'));
 
