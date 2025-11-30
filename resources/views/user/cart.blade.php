@@ -20,7 +20,7 @@
                 <h5 class="mb-0">My Tickets</h5>
             </div>
 
-            <div class="card-body p-0">
+            <div class="card-body p-0" >
                 <table class="table table-hover table-striped align-middle mb-0">
                     <thead class="table-light">
                     <tr>
@@ -88,9 +88,14 @@
                         </tr>
                     @endforeach
                     </tbody>
+
                 </table>
+
             </div>
+
         </div>
+    <br>
+    {{$data->links()}}
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
                 crossorigin="anonymous"></script>

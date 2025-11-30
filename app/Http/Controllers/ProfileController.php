@@ -7,6 +7,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -27,14 +28,14 @@ class ProfileController extends Controller
 
     public function PaymentInfo()
     {
-        $data  = Payment::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
-
-        return view('user.payment',compact('data'));
+        $data  = Payment::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->paginate(5);
+        $cart_count = Cart::where('user_id',Auth::user()->id)->count();
+        return view('user.payment',compact('data','cart_count'));
     }
 
     public function Cart()
     {
-        $data = Cart::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->get();
+        $data = Cart::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(5);
         $cart_count = count($data);
         return view('user.cart',compact('data','cart_count'));
     }
@@ -42,13 +43,13 @@ class ProfileController extends Controller
     public function CartTrash($id)
     {
         try{
-
             $model = Cart::findOrFail($id);
             $model->delete();
             return redirect()->route('users.cart');
 
         }catch(\Exception $e){
-            return abort(404);
+            Log::error($e->getMessage());
+            return  redirect()->route('users.cart')->with('error','Something went wrong');
         }
 
     }

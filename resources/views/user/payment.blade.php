@@ -71,12 +71,14 @@
                             echo '<span class="badge bg-secondary">Something Wrong</span>';
                         }
                     @endphp
-                    
+
                 </td>
             </tr>
             @endforeach
             </tbody>
+
         </table>
+        {{$data->links()}}
     </div>
 </div>
 
