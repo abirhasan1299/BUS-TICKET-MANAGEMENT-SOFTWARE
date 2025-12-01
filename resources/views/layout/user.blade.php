@@ -289,6 +289,29 @@
             font-size: 1.5rem;
             color: var(--dark);
         }
+        #logout {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px; /* space between icon & text */
+            padding: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            margin-left: 20px;
+        }
+
+        #logout i {
+            font-size: 20px;
+        }
+
+        #logout:hover {
+            opacity: 0.7;
+        }
+
 
         /* Responsive Styles */
         @media (max-width: 768px) {
@@ -349,7 +372,7 @@
                 <form action="{{route('users.logout')}}" method="post">
                     @method('POST')
                     @csrf
-                    <button type="submit" class="btn btn-danger" style="margin-left:20px;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    <button type="submit"  id="logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
                 </form>
             </li>
         </ul>

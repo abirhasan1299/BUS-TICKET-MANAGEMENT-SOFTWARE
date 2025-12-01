@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Payment;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -21,6 +20,7 @@ class ProfileController extends Controller
             return view('ticket.template', compact('data','payment'));
 
         }catch(\Exception $e){
+            Log::error($e->getMessage());
             return abort(404);
         }
 

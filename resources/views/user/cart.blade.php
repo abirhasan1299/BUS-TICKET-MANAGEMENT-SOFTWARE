@@ -29,6 +29,7 @@
                         <th>Seats</th>
                         <th>Status</th>
                         <th>Amount</th>
+                        <th>Coupon</th>
                         <th>Purchased At</th>
                         <th>Action</th>
                     </tr>
@@ -55,7 +56,24 @@
                                  }
                             @endphp"> {{ucfirst($d->status)}} </span>
                             </td>
-                            <td>৳ {{ $d->sit_count*($d->slots->price-($d->slots->price*($d->slots->discount/100)))  }}</td>
+                            <td>
+                                @if(!empty($d->coupon))
+                                    ৳ {{ $d->sit_count*($d->slots->price-($d->slots->price*(($d->slots->discount+intval($d->coupons->discount))/100)))  }}
+                                @else
+                                    ৳ {{ $d->sit_count*($d->slots->price-($d->slots->price*($d->slots->discount)/100))}}
+                                @endif
+
+                            </td>
+                            <td>
+                                @php
+                                if(!empty($d->coupon)){
+                                    echo $d->coupons->name."<br>";
+                                    echo '<span class="badge bg-success">'.$d->coupons->discount.'%</span>';
+                                }else{
+                                    echo "N/A";
+                                }
+                                @endphp
+                            </td>
                             <td>
                                 {{ \Carbon\Carbon::parse($d->created_at)->diffForHumans() }}
                             </td>
@@ -69,8 +87,14 @@
                                             <form method="post" action="{{route('payment.pay')}}">
                                                 @csrf
                                                 <input type="hidden" name="cart_id" value="{{$d->id}}">
+
+                                                @if(!empty($d->coupon))
+                                                    <input type="hidden" name="amount" value="{{ $d->sit_count*($d->slots->price-($d->slots->price*(($d->slots->discount+intval($d->coupons->discount))/100)))  }}">
+                                                @else
+                                                    <input type="hidden" name="amount" value="{{ $d->sit_count*($d->slots->price-($d->slots->price*($d->slots->discount/100)))  }}">
+                                                @endif
                                                 <input type="hidden" name="slot_id" value="{{$d->slots->id}}">
-                                                <input type="hidden" name="amount" value="{{ $d->sit_count*($d->slots->price-($d->slots->price*($d->slots->discount/100)))  }}">
+
 
                                                 <button class="btn btn-sm btn-primary" type="submit"><i class="bi bi-credit-card"></i>  </button>
                                             </form>

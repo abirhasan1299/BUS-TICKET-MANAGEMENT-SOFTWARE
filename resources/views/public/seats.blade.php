@@ -253,7 +253,12 @@
         <h1 class="text-white">Select Your Seats</h1>
         <p class="text-light">{{$data->busRoute->start_location}} to {{$data->busRoute->end_location}} • {{\Carbon\Carbon::parse($data->schedule)->format('M d, Y')}} • {{\Carbon\Carbon::parse($data->schedule)->format('h:i A')}}</p>
     </div>
-
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{session('error')}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="card">
         <div class="card-header">
             <h3 class="mb-0"><i class="fas fa-chair me-2"></i>Seat Selection</h3>

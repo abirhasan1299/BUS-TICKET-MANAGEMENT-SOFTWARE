@@ -14,4 +14,8 @@ class Cart extends Model
     {
         return $this->belongsTo(Slot::class,'slot_id','id');
     }
+    public function coupons()
+    {
+        return $this->belongsTo(Coupon::class,'coupon','id');
+    }
 }

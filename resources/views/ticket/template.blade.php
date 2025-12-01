@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bus Ticket</title>
+    <title>Bus Ticket | HotBytes</title>
     <style>
         /* Reset and base styles */
         * {

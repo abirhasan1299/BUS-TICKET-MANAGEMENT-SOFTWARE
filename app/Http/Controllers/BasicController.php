@@ -44,6 +44,8 @@ class BasicController extends Controller
     public function Seat($id)
     {
         $data = Slot::where('slot_code',hex2bin($id))->first();
+
+        //for disable the layout of already booked seat
         $booked = Cart::select('sit_list')
             ->where('slot_id',$data->id)
             ->where('status','purchased')
@@ -60,16 +62,38 @@ class BasicController extends Controller
            'sit_list'=>'required',
            'coupon'=>'nullable'
        ]);
-       Cart::create([
-           'user_id'=>Auth::id(),
-           'slot_id'=>$request->slot_id,
-           'sit_count'=>$request->sit_count,
-           'sit_list'=>$request->sit_list,
-           'gender'=>$request->gender,
-           'coupon'=>$request->coupon,
-       ]);
 
-       return redirect()->route('users.cart')->with('success','Ticket Added to cart.');
+       //coupon code checking is it exist and or is expired ??
+       if(!empty($request->coupon)){
+           $coupon = Coupon::where('coupon_code',$request->coupon)->first();
+
+           //check has there any data in $coupon??
+           if($coupon !=null){
+
+               //chekcking has this coupon is exipired or not ??
+               if(Carbon::parse($coupon->expire)->isPast()){
+                   return redirect()->back()->with('error', 'Expired coupon code');
+               }else{
+                   //count increase that how many times it coupon used ??
+                   Coupon::where('coupon_code',$request->coupon)->increment('count');
+               }
+           }else{
+               return redirect()->back()->with('error', 'Invalid coupon code');
+           }
+       }
+
+        Cart::create([
+            'user_id'=>Auth::id(),
+            'slot_id'=>$request->slot_id,
+            'sit_count'=>$request->sit_count,
+            'sit_list'=>$request->sit_list,
+            'gender'=>$request->gender,
+            'coupon'=>$coupon->id??null,
+        ]);
+
+        return redirect()->route('users.cart')->with('success','Ticket Added to cart.');
+
+
     }
 
 }

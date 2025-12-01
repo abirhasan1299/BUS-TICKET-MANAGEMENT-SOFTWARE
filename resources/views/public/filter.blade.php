@@ -333,6 +333,7 @@
                             <div class="route-time">{{\Carbon\Carbon::parse($d->schedule)->format('h:i A')}}</div>
                             <div class="text-muted">{{strtoupper($d->busRoute->start_location)}}, {{strtoupper($d->busRoute->end_location)}}</div>
                         </div>
+
                         <div class="col-md-2 text-center">
                             <div class="route-price">${{$d->price-round($d->discount/100*$d->price)}}</div>
 
