@@ -361,8 +361,9 @@
             </li>
             <li>
                 <a href="{{route('users.cart')}}">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Cart</span>
+                    <i class="bi bi-ticket-perforated"></i>
+
+                    <span>Tickets</span>
                     @if(isset($cart_count) && $cart_count>0)
                     <span class="badge bg-danger ms-auto">{{$cart_count}}</span>
                     @endif

@@ -79,7 +79,10 @@
                             </td>
                             <td>
                                 @if($d->status=='purchased')
-                                    <a href="{{route('users.ticket.info',\Illuminate\Support\Facades\Crypt::encrypt($d->id))}}" role="button" class="btn btn-sm btn-primary"><i class="bi bi-download"></i>   Ticket</a>
+
+                                    <a href="{{route('users.ticket.info',\Illuminate\Support\Facades\Crypt::encrypt($d->id))}}" role="button" class="btn btn-sm btn-outline-success"><i class="bi bi-download"></i>   Ticket</a>
+
+                                    <a href="#" role="button" class="btn btn-sm btn-outline-info"><i class="bi bi-chat-dots"></i>   Feedback</a>
                                 @endif
                                 @if($d->status=='pending' || $d->status=='failed')
                                         <div class="d-flex justify-content-start">
@@ -96,13 +99,13 @@
                                                 <input type="hidden" name="slot_id" value="{{$d->slots->id}}">
 
 
-                                                <button class="btn btn-sm btn-primary" type="submit"><i class="bi bi-credit-card"></i>  </button>
+                                                <button class="btn btn-sm btn-outline-primary " type="submit"><i class="bi bi-credit-card"></i> Payment </button>
                                             </form>
 
                                             <form style="margin-left: 5px;" action="{{route('users.cart.trash',$d->id)}}" method="post" onclick="confirm('Are You Sure ?')">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button type="submit"  class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> </button>
+                                                <button type="submit"  class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Trash </button>
                                             </form>
                                         </div>
                                 @endif
