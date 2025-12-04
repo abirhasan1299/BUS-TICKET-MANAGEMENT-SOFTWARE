@@ -3,6 +3,7 @@
 use App\Http\Controllers\BasicController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\FeedBackController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RouteController;
@@ -108,7 +109,8 @@ Route::middleware(['auth.user'])->group(function(){
     Route::delete('/profile/cart/{id}',[ProfileController::class,'CartTrash'])->name('users.cart.trash');
     Route::get('profile/payment',[ProfileController::class,'PaymentInfo'])->name('users.payment');
     Route::get('profile/ticket/{id}',[ProfileController::class,'TicketInfo'])->name('users.ticket.info');
-
+    Route::get('ticket/feedback/{id}',[FeedBackController::class,'index'])->name('feedback.home');
+    Route::post('ticket/feedback/',[FeedBackController::class,'store'])->name('feedback.store');
 
 });
 
