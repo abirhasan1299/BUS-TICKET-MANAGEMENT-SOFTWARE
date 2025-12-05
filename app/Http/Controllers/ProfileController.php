@@ -10,6 +10,19 @@ use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
+
+    public function Invoice($encryptId)
+    {
+        try{
+            $data = Payment::where('id', Crypt::decrypt($encryptId))->first();
+            $cart = Cart::where('id',$data->cart_id)->first();
+            return view('ticket.invoice',compact('data','cart'));
+        }catch(\Exception $e){
+            Log::error($e->getMessage());
+            return redirect()->route('users.cart')->with('error','Something went wrong');
+        }
+
+    }
     public function TicketInfo ($string)
     {
         try{

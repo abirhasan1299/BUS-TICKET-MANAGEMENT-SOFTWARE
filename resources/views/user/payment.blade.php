@@ -134,7 +134,8 @@
 
                             <td class="actions-cell text-center">
                                 <div class="action-menu">
-                                    <a role="button" href="#" class="btn-action view-details"
+
+                                    <a role="button" href="{{route('paymentInvoice',\Illuminate\Support\Facades\Crypt::encrypt($d->id))}}" class="btn-action view-details"
                                             title="View Details">
                                         <i class="bi bi-eye"></i>
                                     </a>

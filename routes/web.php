@@ -111,6 +111,7 @@ Route::middleware(['auth.user'])->group(function(){
     Route::get('profile/ticket/{id}',[ProfileController::class,'TicketInfo'])->name('users.ticket.info');
     Route::get('ticket/feedback/{id}',[FeedBackController::class,'index'])->name('feedback.home');
     Route::post('ticket/feedback/',[FeedBackController::class,'store'])->name('feedback.store');
+    Route::get('payment/invoice/{id}',[ProfileController::class,'Invoice'])->name('paymentInvoice');
 
 });
 
