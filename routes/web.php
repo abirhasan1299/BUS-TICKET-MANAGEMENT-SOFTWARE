@@ -22,71 +22,43 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BasicController::class, 'Home'])->name('basic.home');
 Route::post('/search',[BasicController::class, 'Search'])->name('basic.search');
-Route::get('/seat/{id}',[BasicController::class, 'Seat'])->name('basic.seat')->middleware('auth.user');
-Route::post('/cart',[BasicController::class, 'Cart'])->name('basic.cart')->middleware('auth.user');
 
+Route::get('admin/login', [BasicController::class, 'adminLogin'])->name('admin.login');
+Route::post('admin/verify', [BasicController::class, 'adminCheck'])->name('admin.check');
 
+Route::middleware(['admin.auth'])->group(function(){
+    Route::get('admin/payment',[ProfileController::class,'PaymentAdminInfo'])->name('admin.payment');
+    Route::get('admin/logout',[BasicController::class,'AdminLogout'])->name('admin.logout');
 
+    Route::resource('/coupon',CouponController::class);
+    Route::post('coupon/filter',[CouponController::class,'filter'])->name('coupon.filter');
+    Route::get('/dashboard',[BasicController::class,'Dashboard'])->name('basic.dashboard');
 
-/*
-|--------------------------------------------------------------------------
-| Basic Controller Routes
-|--------------------------------------------------------------------------
-*/
+    Route::resource('/route',RouteController::class);
+    Route::post('route/filter',[RouteController::class,'filter'])->name('route.filter');
 
-Route::get('/dashboard',[BasicController::class,'Dashboard'])->name('basic.dashboard');
+    Route::resource('/driver',DriverController::class);
+    Route::post('driver/filter',[DriverController::class,'filter'])->name('driver.filter');
 
-
-/*
-|--------------------------------------------------------------------------
-| Route Controller Routes
-|--------------------------------------------------------------------------
-*/
-Route::resource('/route',RouteController::class);
-Route::post('route/filter',[RouteController::class,'filter'])->name('route.filter');
-
-
+    Route::resource('/bus',BusController::class);
+    Route::resource('/slot',SlotController::class);
+    Route::post('slot/filter',[SlotController::class,'filter'])->name('slot.filter');
+});
 
 /*
 |--------------------------------------------------------------------------
-| Driver Controller Routes
+| USER Controller and FORGET PASSWORD  Routes
 |--------------------------------------------------------------------------
 */
-Route::resource('/driver',DriverController::class);
-Route::post('driver/filter',[DriverController::class,'filter'])->name('driver.filter');
+Route::resource('/users',UserController::class);
+Route::post('users/login',[UserController::class,'Login'])->name('users.login');
+Route::post('users/logout',[UserController::class,'Logout'])->name('users.logout');
+Route::get('user/forget-pasword/',[UserController::class,'ForgetPassword'])->name('forget.password');
 
+Route::post('user/forget/',[UserController::class,'ForgetPasswordPost'])->name('forget.password.post');
 
-/*
-|--------------------------------------------------------------------------
-| BUS Controller Routes
-|--------------------------------------------------------------------------
-*/
-Route::resource('/bus',BusController::class);
+Route::post('user/reset_password/',[UserController::class,'ResetPassword'])->name('forget.password.reset');
 
-
-/*
-|--------------------------------------------------------------------------
-| Slot Controller Routes
-|--------------------------------------------------------------------------
-*/
-Route::resource('/slot',SlotController::class);
-Route::post('slot/filter',[SlotController::class,'filter'])->name('slot.filter');
-
-/*
-|--------------------------------------------------------------------------
-| Tickets Management Controller Routes
-|--------------------------------------------------------------------------
-*/
-Route::get('/ticket-manage',[TicketManagingController::class,'index'])->name('ticket.manage');
-
-
-/*
-|--------------------------------------------------------------------------
-| Coupon Controller Routes
-|--------------------------------------------------------------------------
-*/
-Route::resource('/coupon',CouponController::class);
-Route::post('coupon/filter',[CouponController::class,'filter'])->name('coupon.filter');
 
 
 /*
@@ -94,16 +66,21 @@ Route::post('coupon/filter',[CouponController::class,'filter'])->name('coupon.fi
 | USER Controller Routes
 |--------------------------------------------------------------------------
 */
-Route::resource('/users',UserController::class);
-Route::post('users/login',[UserController::class,'Login'])->name('users.login');
-Route::post('users/logout',[UserController::class,'Logout'])->name('users.logout');
 
-/*
-|--------------------------------------------------------------------------
-| Profile Controller Routes
-|--------------------------------------------------------------------------
-*/
 Route::middleware(['auth.user'])->group(function(){
+
+    Route::get('/seat/{id}',[BasicController::class, 'Seat'])->name('basic.seat')->middleware('auth.user');
+
+    Route::post('/cart',[BasicController::class, 'Cart'])->name('basic.cart');
+
+// SSLCOMMERZ Start
+
+    Route::post('payment/pay', [SslCommerzPaymentController::class, 'index'])->name('payment.pay');
+
+    Route::post('payment/success', [SslCommerzPaymentController::class, 'success'])->name('payment.success');
+
+
+//SSLCOMMERZ END
 
     Route::get('/profile/cart',[ProfileController::class,'Cart'])->name('users.cart');
     Route::delete('/profile/cart/{id}',[ProfileController::class,'CartTrash'])->name('users.cart.trash');
@@ -116,14 +93,7 @@ Route::middleware(['auth.user'])->group(function(){
 });
 
 
-// SSLCOMMERZ Start
 
-Route::post('payment/pay', [SslCommerzPaymentController::class, 'index'])->name('payment.pay');
 
-Route::post('payment/success', [SslCommerzPaymentController::class, 'success'])->name('payment.success');
-Route::post('payment/fail', [SslCommerzPaymentController::class, 'fail'])->name('payment.fail');
-Route::post('payment/cancel', [SslCommerzPaymentController::class, 'cancel'])->name('payment.cancel');
-
-//SSLCOMMERZ END
 
 

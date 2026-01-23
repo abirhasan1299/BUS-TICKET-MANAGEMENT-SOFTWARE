@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | BusTicket Pro</title>
+    <title>Login | HotBytes</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -201,7 +201,7 @@
 
         .remember-forgot {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
         }
 
@@ -216,7 +216,7 @@
 
             .remember-forgot {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
             }
 
             .remember-forgot .form-check {
@@ -277,7 +277,18 @@
                                 <h2 class="fw-bold text-dark">Sign In to Your Account</h2>
                                 <p class="text-muted">Access your personalized bus booking dashboard</p>
                             </div>
-
+                            @if(session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{session('error')}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            @endif
+                            @if(session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{session('success')}}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            @endif
                             <form id="loginForm" action="{{route('users.login')}}" method="post">
                                 @csrf
                                 <div class="mb-3">
@@ -302,15 +313,10 @@
                                             </span>
                                     </div>
                                 </div>
-
                                 <div class="mb-4 remember-forgot">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="rememberMe">
-                                        <label class="form-check-label" for="rememberMe">
-                                            Remember me
-                                        </label>
-                                    </div>
-                                    <a href="#" class="forgot-link">Forgot password?</a>
+
+                                        <a href="{{route('forget.password')}}" class="forgot-link">Forgot password?</a>
+
                                 </div>
 
                                 <div class="d-grid mb-4">

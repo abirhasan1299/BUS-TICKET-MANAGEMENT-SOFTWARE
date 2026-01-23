@@ -260,7 +260,28 @@
                         <div class="detail-value">{{ $data->sit_list }}</div>
                     </div>
                 </div>
-
+@if($user_status>=3000)
+                <!-- Bus Driver info for premium user -->
+                <div class="detail-section">
+                    <div class="section-title">Driver Information</div>
+                    <div class="detail-row">
+                        <div class="detail-label">ID:</div>
+                        <div class="detail-value">{{ $data->slots->driverInfo->driver_code }}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Name:</div>
+                        <div class="detail-value">{{ $data->slots->driverInfo->name }}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Phone:</div>
+                        <div class="detail-value">{{ $data->slots->driverInfo->phone }}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Government ID:</div>
+                        <div class="detail-value">{{ $data->slots->driverInfo->gov_id }}</div>
+                    </div>
+                </div>
+                @endif
                 <!-- Confirmation Badge -->
                 <div style="text-align: center; margin-top: 20px;">
                     <div class="@php
@@ -297,7 +318,7 @@ if(\Carbon\Carbon::parse($data->slots->schedule)->isPast() ){
         <!-- Price Section -->
         <div class="price-section">
             <div class="price-label">Total Amount</div>
-            <div class="price-value"> ৳ {{ $data->sit_count * ($data->slots->price - ($data->slots->price * ($data->slots->discount / 100))) }}
+            <div class="price-value"> BDT {{$payment->amount}}
             </div>
         </div>
 

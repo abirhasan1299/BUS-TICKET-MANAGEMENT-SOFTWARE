@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
+    'premium_amount'=>env('PREMIUM_USER_MIN_AMOUNT',0),
+    'discount_amount'=>env('DISCOUNT_AMOUNT',0),
+
+    'admin_username'=>env('ADMIN_USERNAME','admin'),
+    'admin_password'=>env('ADMIN_PASSWORD','12'),
 
     /*
     |--------------------------------------------------------------------------

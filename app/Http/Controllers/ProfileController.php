@@ -28,22 +28,23 @@ class ProfileController extends Controller
         try{
             $decryptId = Crypt::decrypt($string);
             $data = Cart::findOrFail($decryptId);
-
+            $user_status = Payment::where('user_id',Auth::id())
+                ->where('status','paid')->sum('amount');
             $payment = Payment::where('cart_id',$decryptId)->first();
-            return view('ticket.template', compact('data','payment'));
+            return view('ticket.template', compact('data','payment','user_status'));
 
         }catch(\Exception $e){
             Log::error($e->getMessage());
             return abort(404);
         }
-
     }
 
     public function PaymentInfo()
     {
         $data  = Payment::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->paginate(5);
         $cart_count = Cart::where('user_id',Auth::user()->id)->count();
-        return view('user.payment',compact('data','cart_count'));
+        $total_amount = Payment::where('user_id',Auth::user()->id)->where('status','paid')->sum('amount');
+        return view('user.payment',compact('data','cart_count','total_amount'));
     }
 
     public function Cart()
@@ -65,5 +66,12 @@ class ProfileController extends Controller
             return  redirect()->route('users.cart')->with('error','Something went wrong');
         }
 
+    }
+
+    public function PaymentAdminInfo()
+    {
+        $data  = Payment::orderBy('id', 'DESC')->paginate(5);
+        $cart_count = Payment::where('status','paid')->sum('amount');
+        return view('admins.transaction',compact('data','cart_count'));
     }
 }

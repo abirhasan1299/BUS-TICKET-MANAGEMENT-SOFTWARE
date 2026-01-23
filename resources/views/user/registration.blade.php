@@ -3,366 +3,548 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | BusTicket Pro</title>
+    <title>Register | HotBytes Bus</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --accent: #4cc9f0;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4bb543;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --gradient-light: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 20px 0;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .registration-container {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        .container-compact {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .registration-wrapper {
+            background: white;
+            border-radius: 20px;
             overflow: hidden;
-            margin: 0 auto;
+            box-shadow: var(--shadow);
+            display: flex;
+            min-height: 550px;
+            max-height: 550px;
         }
 
-        .registration-header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+        .left-section {
+            flex: 1.2;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .right-section {
+            flex: 0.8;
+            background: var(--gradient);
             color: white;
-            padding: 30px;
-            text-align: center;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .registration-header h2 {
+        .right-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.3;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
             font-weight: 600;
-            margin-bottom: 5px;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
         }
 
-        .registration-header p {
-            opacity: 0.9;
-            margin-bottom: 0;
+        .input-with-icon {
+            position: relative;
         }
 
-        .registration-form {
-            padding: 30px;
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 1rem;
+            z-index: 2;
         }
 
         .form-control {
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid #e1e5ee;
-            transition: all 0.3s;
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: white;
         }
 
         .form-control:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            outline: none;
         }
 
-        .form-label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #495057;
-        }
-
-        .input-group-text {
-            background-color: #f8f9fa;
-            border: 1px solid #e1e5ee;
-            border-right: none;
-        }
-
-        .btn-primary {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
             border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s;
+            color: var(--gray);
+            cursor: pointer;
+            z-index: 2;
         }
 
-        .btn-primary:hover {
+        .form-text {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-text i {
+            font-size: 0.9rem;
+        }
+
+        .btn-register {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-register:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
-        }
-
-        .form-check-input:checked {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .terms-link {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .terms-link:hover {
-            text-decoration: underline;
+            box-shadow: var(--shadow-hover);
         }
 
         .login-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .login-link a {
             color: var(--primary);
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        .login-link:hover {
-            text-decoration: underline;
-        }
-
-        .feature-icon {
-            background-color: rgba(67, 97, 238, 0.1);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: var(--primary);
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .feature-text h5 {
-            margin-bottom: 5px;
             font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
 
-        .feature-text p {
-            margin-bottom: 0;
-            font-size: 0.9rem;
-            color: #6c757d;
+        .login-link a:hover {
+            color: var(--secondary);
         }
 
-        .divider {
+        /* Right Section Styles */
+        .welcome-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-item {
             display: flex;
             align-items: center;
-            margin: 25px 0;
+            gap: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        .divider::before, .divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .divider-text {
-            padding: 0 15px;
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-
-        .social-btn {
+        .benefit-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-            border: 1px solid #e1e5ee;
-            border-radius: 8px;
-            background-color: white;
-            transition: all 0.3s;
-            width: 100%;
-            font-weight: 500;
+            flex-shrink: 0;
         }
 
-        .social-btn:hover {
-            background-color: #f8f9fa;
-            border-color: #c3cfe2;
+        .benefit-content h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .social-btn i {
-            margin-right: 10px;
-            font-size: 1.2rem;
+        .benefit-content p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 0;
         }
 
-        .google-btn {
-            color: #db4437;
+        .floating-bus {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            font-size: 10rem;
+            opacity: 0.1;
+            transform: rotate(-20deg);
+            z-index: 0;
         }
 
-        .facebook-btn {
-            color: #4267B2;
+        /* Alert Styling */
+        .alert-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
         }
 
-        @media (max-width: 768px) {
-            .registration-container {
-                margin: 0 15px;
+        .alert-custom {
+            border-radius: 10px;
+            border: none;
+            box-shadow: var(--shadow);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .registration-wrapper {
+                flex-direction: column;
+                max-height: none;
+                min-height: auto;
             }
 
-            .registration-form {
-                padding: 20px;
+            .right-section {
+                display: none;
+            }
+
+            .left-section {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .left-section {
+                padding: 25px;
+            }
+
+            .form-title {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="row justify-content-center">
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<!-- Alerts Container -->
+<div class="alert-container">
+    @if(session('success'))
+        <div class="alert alert-success alert-custom alert-dismissible fade show">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-check-circle me-2"></i>
+                <div>{{ session('success') }}</div>
             </div>
-        @endif
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
 
-        @if(session('danger'))
-            <div class="alert alert-danger alert-dismissible fade show">
-                {{ session('danger') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    @if(session('danger'))
+        <div class="alert alert-danger alert-custom alert-dismissible fade show">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <div>{{ session('danger') }}</div>
             </div>
-        @endif
-        <div class="col-lg-10">
-            <div class="registration-container">
-                <div class="row g-0">
-                    <!-- Left Column - Registration Form -->
-                    <div class="col-lg-7">
-                        <div class="registration-form">
-                            <div class="text-center mb-4">
-                                <h2 class="fw-bold text-dark">Create Your Account</h2>
-                                <p class="text-muted">Join thousands of travelers using our bus ticket system</p>
-                            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+</div>
 
-                            <form id="registrationForm" action="{{route('users.store')}}" method="post">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-12 mb-3">
-                                        <label for="firstName" class="form-label">Full  Name</label>
-                                        <input type="text" class="form-control" id="firstName" name="name" placeholder="Enter your  name" required>
-                                        @error('name')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+<div class="container-compact">
+    <div class="registration-wrapper">
+        <!-- Left Section - Registration Form -->
+        <div class="left-section">
+            <div class="logo-header">
+                <div class="logo-icon">
+                    <i class="fas fa-bus"></i>
+                </div>
+                <div class="logo-text">HotBytes</div>
+            </div>
 
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email Address</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required>
-                                        @error('email')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+            <h2 class="form-title">Create Account</h2>
+            <p class="form-subtitle">Join our community of travelers and start your journey</p>
 
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Phone Number</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                        <input type="tel" name="phone" class="form-control" id="phone" placeholder="Enter your phone number" required>
-                                        @error('phone')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+            <form id="registrationForm" action="{{route('users.store')}}" method="post">
+                @csrf
 
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" required>
-                                        <span class="input-group-text toggle-password" style="cursor: pointer;">
-                                                <i class="fas fa-eye"></i>
-                                            </span>
-                                    </div>
-                                    <div class="form-text">Password must be at least 8 characters with uppercase, lowercase, and numbers.</div>
-                                    @error('password')
-                                    <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                        <input type="password" class="form-control" id="confirmPassword" name="password_confirmation" placeholder="Confirm your password" required>
-                                    </div>
-                                </div>
-
-                                <div class="d-grid mb-4">
-                                    <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
-                                </div>
-
-
-
-                                <div class="text-center">
-                                    <p class="mb-0">Already have an account? <a href="{{route('users.index')}}" class="login-link">Sign In</a></p>
-                                </div>
-                            </form>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name" class="form-label">
+                            <i class="fas fa-user me-1"></i>Full Name
+                        </label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="John Doe" value="{{ old('name') }}" required>
                         </div>
+                        @error('name')
+                        <div class="form-text text-danger">
+                            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                        </div>
+                        @enderror
                     </div>
 
-                    <!-- Right Column - Features -->
-                    <div class="col-lg-5 d-none d-lg-block" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white;">
-                        <div class="p-5 h-100 d-flex flex-column justify-content-center">
-                            <h3 class="fw-bold mb-4">Why Register With Us?</h3>
-
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-bus"></i>
-                                </div>
-                                <div class="feature-text">
-                                    <h5>Easy Booking</h5>
-                                    <p>Book bus tickets in just a few clicks with our intuitive platform.</p>
-                                </div>
-                            </div>
-
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-tags"></i>
-                                </div>
-                                <div class="feature-text">
-                                    <h5>Exclusive Deals</h5>
-                                    <p>Get access to special discounts and promotional offers.</p>
-                                </div>
-                            </div>
-
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <div class="feature-text">
-                                    <h5>Secure Payments</h5>
-                                    <p>Your transactions are protected with bank-level security.</p>
-                                </div>
-                            </div>
-
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-history"></i>
-                                </div>
-                                <div class="feature-text">
-                                    <h5>Booking History</h5>
-                                    <p>Keep track of all your past and upcoming journeys.</p>
-                                </div>
-                            </div>
-
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-headset"></i>
-                                </div>
-                                <div class="feature-text">
-                                    <h5>24/7 Support</h5>
-                                    <p>Our customer service team is always ready to assist you.</p>
-                                </div>
-                            </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope me-1"></i>Email Address
+                        </label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="john@example.com" value="{{ old('email') }}" required>
                         </div>
+                        @error('email')
+                        <div class="form-text text-danger">
+                            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="phone" class="form-label">
+                            <i class="fas fa-phone me-1"></i>Phone Number
+                        </label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                   placeholder="+1 (555) 123-4567" value="{{ old('phone') }}" required>
+                        </div>
+                        @error('phone')
+                        <div class="form-text text-danger">
+                            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock me-1"></i>Password
+                        </label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="••••••••" required>
+                            <button type="button" class="password-toggle" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="form-text">
+                            <i class="fas fa-info-circle"></i> Minimum 8 characters with letters & numbers
+                        </div>
+                        @error('password')
+                        <div class="form-text text-danger">
+                            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password_confirmation" class="form-label">
+                        <i class="fas fa-lock me-1"></i>Confirm Password
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" class="form-control" id="password_confirmation"
+                               name="password_confirmation" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-register">
+                    <i class="fas fa-user-plus me-2"></i>Create Account
+                </button>
+
+                <div class="login-link">
+                    Already have an account?
+                    <a href="{{route('users.index')}}">
+                        <i class="fas fa-sign-in-alt me-1"></i>Sign In Now
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right Section - Benefits -->
+        <div class="right-section">
+            <h3 class="welcome-title">Why Join HotBytes?</h3>
+
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="benefit-content">
+                    <h5>Instant Booking</h5>
+                    <p>Book tickets in seconds with our streamlined process</p>
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="benefit-content">
+                    <h5>Secure Payments</h5>
+                    <p>Bank-level encryption for all transactions</p>
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="benefit-content">
+                    <h5>Exclusive Deals</h5>
+                    <p>Member-only discounts and promotions</p>
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="benefit-content">
+                    <h5>24/7 Support</h5>
+                    <p>Dedicated customer service anytime</p>
+                </div>
+            </div>
+
+            <div class="floating-bus">
+                <i class="fas fa-bus"></i>
             </div>
         </div>
     </div>
@@ -372,35 +554,75 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Toggle password visibility
-    document.querySelector('.toggle-password').addEventListener('click', function() {
-        const passwordInput = document.getElementById('password');
-        const icon = this.querySelector('i');
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = togglePassword.querySelector('i');
 
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        if (type === 'text') {
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
         } else {
-            passwordInput.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
         }
     });
 
     // Form validation
     document.getElementById('registrationForm').addEventListener('submit', function(e) {
-
-
         const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
+        const confirmPassword = document.getElementById('password_confirmation').value;
 
         if (password !== confirmPassword) {
-            alert('Passwords do not match. Please try again.');
-            return;
+            e.preventDefault();
+            showAlert('Passwords do not match. Please try again.', 'danger');
+            return false;
         }
 
-
+        // Password strength validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            e.preventDefault();
+            showAlert('Password must be at least 8 characters with uppercase, lowercase, and numbers.', 'warning');
+            return false;
+        }
     });
+
+    // Auto-remove alerts after 5 seconds
+    setTimeout(() => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        });
+    }, 5000);
+
+    function showAlert(message, type) {
+        const alertHtml = `
+                <div class="alert alert-${type} alert-custom alert-dismissible fade show">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-${type === 'danger' ? 'exclamation' : 'exclamation'}-circle me-2"></i>
+                        <div>${message}</div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+
+        const alertContainer = document.querySelector('.alert-container');
+        alertContainer.innerHTML = alertHtml;
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            const alert = alertContainer.querySelector('.alert');
+            if (alert) {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }
+        }, 5000);
+    }
 </script>
 </body>
 </html>

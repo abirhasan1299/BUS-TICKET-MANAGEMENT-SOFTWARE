@@ -178,6 +178,17 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" style="color:red;">BDT {{$data->slots->price*($cart->coupons->discount/100)*$cart->sit_count}}</td>
                             </tr>
                             @endif
+                            @if($data->membership)
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">Membership Discount</div>
+                                        <div class="text-sm text-gray-500">Premium</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">N/A</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BDT {{config('app.discount_amount')}}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" style="color:red;">BDT {{config('app.discount_amount')}}</td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -189,11 +200,7 @@
                                 <div class="pt-3 flex justify-between text-lg font-bold">
                                     <span class="text-gray-900">Total Amount</span>
                                     <span class="text-blue-600">BDT
-                                        @if($cart->coupon!=null)
-                                            {{ $cart->sit_count*($data->slots->price-($data->slots->price*(($data->slots->discount+intval($cart->coupons->discount))/100))) }}
-                                        @else
-                                            {{ $cart->sit_count*($data->slots->price-($data->slots->price*(($data->slots->discount)/100))) }}
-                                        @endif
+                                       {{$data->amount}}
                                     </span>
                                 </div>
                             </div>
@@ -204,9 +211,7 @@
 
             <!-- Action Buttons -->
             <div class="mt-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-                <div class="text-sm text-gray-500">
-                    <p>Need help? Contact our customer support at support@busexpresspro.com</p>
-                </div>
+
                 <div class="flex space-x-4">
                     <button onclick="window.print()" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

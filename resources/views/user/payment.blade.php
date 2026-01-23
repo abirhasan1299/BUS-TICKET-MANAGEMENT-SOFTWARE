@@ -15,11 +15,11 @@
             <div class="header-stats">
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <i class="bi bi-cash-stack"></i>
+                        BDT
                     </div>
                     <div class="stat-content">
-                        <span class="stat-value">{{ $data->count() }}</span>
-                        <span class="stat-label">Total Transactions</span>
+                        <span class="stat-value">{{ $total_amount }}</span>
+                        <span class="stat-label">Total Amount</span>
                     </div>
                 </div>
             </div>

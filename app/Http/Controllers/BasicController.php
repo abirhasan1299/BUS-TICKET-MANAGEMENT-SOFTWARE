@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\BusRoute;
 use App\Models\Cart;
+use App\Models\Driver;
+use App\Models\User;
 use App\Models\Coupon;
 use App\Models\Passenger;
+use App\Models\Payment;
 use App\Models\Slot;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,7 +18,39 @@ class BasicController extends Controller
 {
     public function Dashboard()
     {
-        return view('basic.dashboard');
+        $user = User::count();
+        $amount = Payment::where('status','paid')->sum('amount');
+        $busroute = BusRoute::count();
+        $drivers = Driver::count();
+        return view('basic.dashboard',compact('user','amount','busroute','drivers'));
+    }
+    public function AdminLogout()
+    {
+        session()->flush();
+        return redirect()->route('admin.login');
+    }
+    public function adminLogin()
+    {
+        return view('admins.login');
+    }
+
+    public function adminCheck(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required|min:6'
+        ]);
+
+        if($request->username==config('app.admin_username') && $request->password==config('app.admin_password'))
+        {
+            session([
+                'admin_username' => $request->username,
+                'admin_password' => $request->password
+            ]);
+            return redirect()->route('basic.dashboard');
+        }else{
+            return redirect()->route('admin.login')->with('error','Invalid username or password');
+        }
     }
 
     public function Home()
@@ -58,10 +93,22 @@ class BasicController extends Controller
     {
        $validated = $request->validate([
            'gender'=>'required',
-           'sit_count'=>'required|max:4',
+           'sit_count'=>'required',
            'sit_list'=>'required',
            'coupon'=>'nullable'
        ]);
+
+
+       if(session('is_premium'))
+       {
+           if($request->sit_count>6){
+               return redirect()->back()->with('error', 'You can take max six sit at a time');
+           }
+       }else{
+           if($request->sit_count>4){
+               return redirect()->back()->with('error', 'You can take max four sit at a time');
+           }
+       }
 
        //coupon code checking is it exist and or is expired ??
        if(!empty($request->coupon)){

@@ -29,7 +29,6 @@
                     <th>Ticket Details</th>
                     <th>Seats</th>
                     <th>Status</th>
-                    <th>Amount</th>
                     <th>Coupon</th>
                     <th>Purchased</th>
                     <th class="text-center">Actions</th>
@@ -70,21 +69,12 @@
                                 </span>
                         </td>
 
-                        <td class="amount-cell">
-                            <div class="amount-display">
-                                @if(!empty($d->coupon))
-                                    <span class="amount">৳ {{ $d->sit_count*($d->slots->price-($d->slots->price*(($d->slots->discount+intval($d->coupons->discount))/100))) }}</span>
-                                @else
-                                    <span class="amount">৳ {{ $d->sit_count*($d->slots->price-($d->slots->price*($d->slots->discount)/100))}}</span>
-                                @endif
-                            </div>
-                        </td>
 
                         <td class="coupon-cell">
                             @if(!empty($d->coupon))
                                 <div class="coupon-info">
                                     <span class="coupon-name">{{$d->coupons->name}}</span>
-                                    <span class="coupon-discount">{{$d->coupons->discount}}% OFF</span>
+                                    <span class="coupon-discount">{{$d->coupons->discount}}% </span>
                                 </div>
                             @else
                                 <span class="no-coupon">No coupon</span>
@@ -115,7 +105,6 @@
                                     </a>
                                 </div>
                             @endif
-
                             @if($d->status == 'pending' || $d->status == 'failed')
                                 <div class="action-buttons">
                                     <form method="post" action="{{route('payment.pay')}}" class="d-inline">
